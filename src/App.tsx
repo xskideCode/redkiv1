@@ -36,6 +36,22 @@ export default function App() {
         
         {/* Sticky Container for Hero & ScanSection */}
         <div ref={containerRef} className="relative w-full">
+          {/* Full-width Dither Background */}
+          <div className="absolute inset-0 z-0">
+             <div className="sticky top-0 h-screen w-full pointer-events-none opacity-40 mix-blend-screen" style={{ WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 70%)' }}>
+                 <Dither
+                    waveColor={[0.937, 0.267, 0.267]}
+                    disableAnimation={false}
+                    enableMouseInteraction={true}
+                    mouseRadius={0.5}
+                    colorNum={4}
+                    waveAmplitude={0.8}
+                    waveFrequency={4.0}
+                    waveSpeed={0.8}
+                 />
+             </div>
+          </div>
+          
           <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 relative z-10">
             
             {/* Left Content Column */}
@@ -47,19 +63,6 @@ export default function App() {
             {/* Right Sticky Column for Phone */}
             <div className="relative hidden lg:block">
               <div className="sticky top-0 h-screen flex items-center justify-center">
-                <div className="absolute inset-0 pointer-events-none opacity-100 z-0 mix-blend-screen">
-                   <Dither
-                      waveColor={[0.937, 0.267, 0.267]}
-                      disableAnimation={false}
-                      enableMouseInteraction={true}
-                      mouseRadius={0.3}
-                      colorNum={4}
-                      waveAmplitude={0.36}
-                      waveFrequency={5.2}
-                      waveSpeed={0.05}
-                   />
-                 </div>
-
                  <Phone3D 
                    showStand={true} 
                    isScanning={scanning} 

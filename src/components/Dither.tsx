@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useRef, useEffect, forwardRef } from 'react';
+import React, { useRef, useEffect, forwardRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
@@ -51,7 +51,7 @@ float cnoise(vec2 P) {
   vec2 g00 = vec2(gx.x, gy.x);
   vec2 g10 = vec2(gx.y, gy.y);
   vec2 g01 = vec2(gx.z, gy.z);
-  vec2 g11 = vec2(gx.w, w);
+  vec2 g11 = vec2(gx.w, gy.w);
   vec4 norm = taylorInvSqrt(vec4(dot(g00,g00), dot(g01,g01), dot(g10,g10), dot(g11,g11)));
   g00 *= norm.x; g01 *= norm.y; g10 *= norm.z; g11 *= norm.w;
   float n00 = dot(g00, vec2(fx.x, fy.x));
@@ -141,19 +141,19 @@ class RetroEffectImpl extends Effect {
       ['pixelSize', new THREE.Uniform(2.0)]
     ]);
     super('RetroEffect', ditherFragmentShader, { uniforms });
-    (this as any)._customUniforms = uniforms;
+    this.uniforms = uniforms;
   }
-  set colorNum(v: any) {
-    (this as any)._customUniforms.get('colorNum').value = v;
+  set colorNum(v: number) {
+    this.uniforms.get('colorNum')!.value = v;
   }
   get colorNum() {
-    return (this as any)._customUniforms.get('colorNum').value;
+    return this.uniforms.get('colorNum')!.value;
   }
-  set pixelSize(v: any) {
-    (this as any)._customUniforms.get('pixelSize').value = v;
+  set pixelSize(v: number) {
+    this.uniforms.get('pixelSize')!.value = v;
   }
   get pixelSize() {
-    return (this as any)._customUniforms.get('pixelSize').value;
+    return this.uniforms.get('pixelSize')!.value;
   }
 }
 
@@ -176,7 +176,7 @@ function DitheredWaves({
   enableMouseInteraction,
   mouseRadius
 }: any) {
-  const mesh = useRef<any>(null);
+  const mesh = useRef<THREE.Mesh>(null);
   const mouseRef = useRef(new THREE.Vector2());
   const { viewport, size, gl } = useThree();
 
@@ -227,12 +227,17 @@ function DitheredWaves({
     }
   });
 
-  const handlePointerMove = (e: any) => {
-    if (!enableMouseInteraction) return;
-    const rect = gl.domElement.getBoundingClientRect();
-    const dpr = gl.getPixelRatio();
-    mouseRef.current.set((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr);
-  };
+  useEffect(() => {
+    const handleGlobalPointerMove = (e: MouseEvent) => {
+      if (!enableMouseInteraction) return;
+      const dpr = gl.getPixelRatio();
+      // Calculate relative to the window since canvas is full screen
+      mouseRef.current.set(e.clientX * dpr, e.clientY * dpr);
+    };
+
+    window.addEventListener('mousemove', handleGlobalPointerMove);
+    return () => window.removeEventListener('mousemove', handleGlobalPointerMove);
+  }, [enableMouseInteraction, gl]);
 
   return (
     <>
@@ -248,16 +253,6 @@ function DitheredWaves({
       <EffectComposer>
         <RetroEffect colorNum={colorNum} pixelSize={pixelSize} />
       </EffectComposer>
-
-      <mesh
-        onPointerMove={handlePointerMove}
-        position={[0, 0, 0.01]}
-        scale={[viewport.width, viewport.height, 1]}
-        visible={false}
-      >
-        <planeGeometry args={[1, 1]} />
-        <meshBasicMaterial transparent opacity={0} />
-      </mesh>
     </>
   );
 }
