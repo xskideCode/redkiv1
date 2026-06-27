@@ -4,62 +4,95 @@ import { QrCode, Share2, MessageCircle, ShieldCheck } from 'lucide-react';
 
 export function Certificate() {
   return (
-    <section className="py-32 bg-[#0a0a0a] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-24 bg-white relative overflow-hidden border-t border-dashed border-black/10 text-black">
+      
+      <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-12 relative z-10">
         
-        <div className="text-center mb-16">
-          <h2 className="text-[3.5rem] lg:text-[4rem] font-bold tracking-tight text-white mb-6 leading-tight">
-            Share proof before payment.
-          </h2>
-          <p className="text-xl text-[#a1a1aa] max-w-2xl mx-auto">
-            Get a public certificate you can share with buyers or sellers instantly.
-          </p>
-        </div>
-
-        <div className="flex justify-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 50, rotateX: 20 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", duration: 1.5 }}
-            className="w-full max-w-md bg-[#111111] rounded-2xl p-8 shadow-2xl border border-[#27272a] text-white perspective-[1000px] relative overflow-hidden group cursor-pointer"
-            whileHover={{ rotateY: 5, rotateX: -5, scale: 1.02 }}
-          >
-            {/* Hologram effect on hover */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform -translate-x-full group-hover:translate-x-full" />
+        {/* Brutalist Container */}
+        <div className="border-y border-dashed border-black/10 grid lg:grid-cols-2">
             
-            <div className="flex justify-between items-start mb-8">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-6 h-6 text-[#ef4444]" />
-                <span className="font-bold tracking-tight">Redki OS</span>
+            {/* Left Content Side */}
+            <div className="p-10 lg:p-20 flex flex-col justify-center relative z-10 border-b lg:border-b-0 lg:border-r border-dashed border-black/10 bg-black/[0.02]">
+              <span className="inline-flex self-start px-2 py-1 bg-black/5 border border-black/10 text-black text-[10px] font-mono uppercase tracking-widest mb-8">
+                // Public Verification
+              </span>
+              
+              <h2 className="text-[3rem] lg:text-[4rem] font-[900] tracking-tighter text-black mb-6 leading-[1.05] uppercase">
+                SHARE PROOF <br className="hidden lg:block"/>
+                BEFORE PAYMENT.
+              </h2>
+              
+              <p className="text-sm text-zinc-600 font-mono max-w-md leading-relaxed mb-10">
+                Instantly generate a public, cryptographically-backed certificate for any scanned device. Send it to buyers or sellers to prove authenticity.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                 <button className="flex items-center justify-center gap-3 border border-dashed border-black/20 bg-black text-white px-8 py-4 font-mono font-bold tracking-widest uppercase hover:bg-black/80 transition-colors">
+                   <Share2 className="w-5 h-5" />
+                   Generate Link
+                 </button>
               </div>
-              <span className="text-xs font-mono font-bold bg-[#18181b] border border-[#27272a] text-white px-3 py-1 rounded-full uppercase">VERIFIED</span>
             </div>
 
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center p-4 bg-[#18181b] border border-[#27272a] rounded-xl mb-6 relative">
-                <QrCode className="w-32 h-32 text-white" />
-                <motion.div 
-                  className="absolute inset-0 border-2 border-[#ef4444] rounded-xl"
-                  animate={{ scale: [1, 1.05, 1], opacity: [0.5, 0, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </div>
-              <h3 className="text-2xl font-bold mb-1">iPhone 13 Pro</h3>
-              <p className="text-[#a1a1aa] font-mono text-sm font-medium">IMEI: 3569********12</p>
-            </div>
+            {/* Right Certificate Side */}
+            <div className="relative p-10 lg:p-20 flex items-center justify-center bg-white overflow-hidden">
+               
+               <motion.div 
+                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ type: "spring", duration: 1 }}
+                 className="w-full max-w-sm relative z-10"
+               >
+                 {/* The Certificate UI - Sharp layout with interior soft borders */}
+                 <div className="relative bg-zinc-50 rounded-sm p-8 border border-dashed border-black/20 shadow-xl overflow-hidden">
+                    
+                    <div className="flex justify-between items-start mb-10 relative z-10">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                          <ShieldCheck className="w-5 h-5 text-red-500" />
+                        </div>
+                        <span className="font-[900] tracking-tight uppercase text-black text-lg">REDKI OS</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 px-2 py-1 uppercase tracking-widest flex items-center gap-1.5">
+                        VERIFIED
+                      </span>
+                    </div>
 
-            <div className="border-t border-[#27272a] pt-6 grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center gap-2 bg-[#10b981] text-white rounded-lg py-3 font-medium hover:bg-emerald-600 transition-colors">
-                <MessageCircle className="w-4 h-4" />
-                WhatsApp
-              </button>
-              <button className="flex items-center justify-center gap-2 bg-[#18181b] text-white border border-[#27272a] rounded-lg py-3 font-medium hover:bg-[#27272a] transition-colors">
-                <Share2 className="w-4 h-4" />
-                Share Link
-              </button>
+                    <div className="text-center mb-10 relative z-10">
+                      <div className="inline-flex items-center justify-center p-6 bg-black/[0.02] border border-dashed border-black/10 mb-8 relative">
+                        <QrCode className="w-32 h-32 text-zinc-800" strokeWidth={1} />
+                        
+                        {/* Scanning beam across QR code */}
+                        <motion.div 
+                          className="absolute left-0 right-0 h-[1px] bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
+                          animate={{ top: ['10%', '90%', '10%'] }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        />
+                        
+                        {/* Corner brackets */}
+                        <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-red-500/50" />
+                        <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-red-500/50" />
+                        <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-red-500/50" />
+                        <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-red-500/50" />
+                      </div>
+                      <h3 className="text-2xl font-[900] mb-2 tracking-tight uppercase text-black">iPhone 13 Pro</h3>
+                      <p className="text-zinc-600 font-mono text-[10px] bg-zinc-100 inline-block px-4 py-1.5 border border-dashed border-black/10 uppercase tracking-widest">IMEI: 3569********12</p>
+                    </div>
+
+                    <div className="border-t border-dashed border-black/10 pt-6 grid grid-cols-2 gap-3 relative z-10">
+                      <button className="flex items-center justify-center gap-2 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 py-3 font-mono font-bold text-[10px] tracking-widest uppercase hover:bg-emerald-500/20 transition-colors">
+                        <MessageCircle className="w-4 h-4" />
+                        WhatsApp
+                      </button>
+                      <button className="flex items-center justify-center gap-2 bg-black/5 text-black border border-dashed border-black/20 py-3 font-mono font-bold text-[10px] tracking-widest uppercase hover:bg-black/10 transition-colors">
+                        <Share2 className="w-4 h-4" />
+                        Copy Link
+                      </button>
+                    </div>
+                 </div>
+               </motion.div>
             </div>
-          </motion.div>
         </div>
 
       </div>

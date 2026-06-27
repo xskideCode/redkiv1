@@ -23,6 +23,34 @@
   }
 }
 
+@layer utilities {
+  .bg-fabric {
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, rgba(239, 68, 68, 0.1), transparent 80%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fabric'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015 0.05' numOctaves='3' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.25 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fabric)'/%3E%3C/svg%3E");
+    background-color: #050505;
+  }
+  
+  .border-dashed-grid {
+    border-color: rgba(255, 255, 255, 0.1);
+    border-style: dashed;
+    border-width: 1px;
+  }
+  
+  .dashed-grid-bg {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 25% 100%, 100% 25%;
+  }
+
+  .text-inverted-clip {
+    mix-blend-mode: difference;
+    color: white;
+  }
+}
+
 @keyframes scanline {
   0% {
     transform: translateY(-100%);

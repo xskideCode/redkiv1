@@ -1,142 +1,86 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Search, ShieldAlert, ShieldCheck } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { Search } from 'lucide-react';
+
+import { TextReveal } from './TextReveal';
 
 export function HeroLeft() {
   const [imei, setImei] = useState('');
 
   return (
-    <div className="min-h-screen flex flex-col justify-center pt-24 pb-12">
-      <div className="flex flex-col items-start text-left">
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-[4rem] lg:text-[6rem] font-[800] uppercase tracking-[-0.04em] text-white leading-[1.0] mb-6"
-        >
-          BEFORE<br/>
-          YOU PAY,<br/>
-          VERIFY<span className="text-[#ef4444]">.</span>
-        </motion.h1>
-        
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-[#d1d5db] mb-8 max-w-[400px] font-light leading-relaxed"
-        >
-          Check the hidden details of any used phone in Kenya.<br/>
-          Get a clear trust score based on official records,<br/>
-          repair history, and diagnostics.
-        </motion.p>
+    <div className="w-full h-full flex flex-col justify-between pt-32 pb-8 pr-0 lg:pr-8 border-r border-dashed border-white/10 relative z-10">
+      
+      {/* Top Left Metadata */}
+      <div className="flex flex-col gap-8">
+        <div className="text-[10px] font-mono tracking-widest uppercase text-zinc-500">
+          <p>Redki OS v1.0.0</p>
+          <p>Nairobi, Kenya</p>
+        </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="w-full max-w-md mb-12"
-        >
-          <div className="relative flex items-center bg-[#f3f4f6] rounded-xl p-1.5 transition-colors">
-            <div className="pl-4 pr-2 text-[#6b7280]">
-              <Search className="w-5 h-5" />
+        <h1 className="text-4xl md:text-5xl lg:text-[4.5rem] font-[900] tracking-tighter text-white leading-[1.1] max-w-[400px] lg:max-w-[450px]">
+          BEFORE YOU PAY, <br />
+          VERIFY.
+        </h1>
+        
+        <TextReveal 
+          text="Check the hidden details of any used phone in Kenya. Get a clear trust score based on official records, repair history, and deep diagnostics."
+          className="text-sm md:text-base font-medium leading-relaxed max-w-[320px] lg:max-w-[400px]"
+        />
+
+        {/* Search Input - Soft interior, sharp grid exterior */}
+        <div className="w-full max-w-[320px] mt-4">
+          <div className="relative flex items-center bg-white/5 backdrop-blur-sm rounded-full p-1 border border-white/10 transition-colors focus-within:border-red-500/50">
+            <div className="pl-4 pr-2 text-zinc-500">
+              <Search className="w-4 h-4" />
             </div>
             <input
               type="text"
-              placeholder="Enter IMEI or Serial Number"
+              placeholder="Enter IMEI..."
               value={imei}
               onChange={(e) => setImei(e.target.value)}
-              className="flex-1 bg-transparent border-none text-[#111827] placeholder-[#9ca3af] focus:outline-none focus:ring-0 py-3.5 text-base font-medium"
+              className="flex-1 bg-transparent border-none text-white placeholder-zinc-600 focus:outline-none focus:ring-0 py-2.5 text-sm font-mono tracking-wider"
             />
-            <button className="bg-[#ef4444] text-white px-8 py-3.5 rounded-lg text-base font-bold hover:bg-red-600 transition-colors">
-              Verify
+            <button className="bg-red-500 text-white p-2.5 rounded-full hover:bg-red-400 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
           </div>
-          
-          <p className="text-sm text-[#9ca3af] mt-4 flex items-center gap-1.5 ml-1 font-medium">
-            <ShieldCheck className="w-4 h-4" />
-            Dial <span className="text-[#ef4444] font-bold">*#06#</span> to find your IMEI
+          <p className="text-[10px] text-zinc-600 mt-3 font-mono uppercase tracking-widest ml-4">
+             Dial *#06# to find your IMEI
           </p>
-        </motion.div>
-
-        {/* Trust Badges */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-3 gap-6 w-full border-t border-[#27272a] pt-8 mt-2"
-        >
-          <div className="flex items-start gap-3">
-            <div className="mt-1 w-8 h-8 rounded-md border border-[#ef4444]/30 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-4 h-4 text-[#ef4444]" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white mb-0.5 leading-tight">Official Data Sources</p>
-              <p className="text-[11px] text-[#9ca3af]">GSMA, Operators & More</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="mt-1 w-8 h-8 rounded-md border border-[#ef4444]/30 flex items-center justify-center shrink-0">
-              <svg className="w-4 h-4 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m14.7 6.3-1.4 1.4"/><path d="M16 8 8 16"/><path d="M17.3 14.7 18.7 16"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M22 12h-4"/><path d="M6 12H2"/><path d="M18.4 5.6 15.5 8.5"/><path d="M8.5 15.5 5.6 18.4"/></svg>
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white mb-0.5 leading-tight">Repair & Diagnostics</p>
-              <p className="text-[11px] text-[#9ca3af]">Hardware & Software</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="mt-1 w-8 h-8 rounded-md border border-[#ef4444]/30 flex items-center justify-center shrink-0">
-              <svg className="w-4 h-4 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white mb-0.5 leading-tight">Private & Secure</p>
-              <p className="text-[11px] text-[#9ca3af]">Your data stays protected</p>
-            </div>
-          </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
 export function HeroRightElements({ scrollYProgress }: { scrollYProgress?: any }) {
-  // Fade out elements as we scroll down
+  // We use the scroll progress to fade out the 3D phone's floating UI elements
+  // as the user scrolls past the hero.
   return (
     <motion.div 
-      style={{ opacity: scrollYProgress ? scrollYProgress.get() < 0.2 ? 1 : 0 : 1 }}
-      className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+      style={{ opacity: scrollYProgress ? useTransform(scrollYProgress, [0, 0.2], [1, 0]) : 1 }}
+      className="absolute inset-0 pointer-events-none transition-opacity duration-500 w-full h-full border-r border-dashed border-white/10"
     >
-      <motion.div 
-        animate={{ y: [-5, 5, -5] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[40%] left-0 lg:-left-8 bg-[#111111] border border-[#27272a] p-3 rounded-2xl shadow-2xl flex items-center gap-3 z-20"
-      >
-        <div className="w-8 h-8 rounded-full border border-[#10b981] flex items-center justify-center text-[#10b981]">
-          <ShieldCheck className="w-4 h-4" />
-        </div>
-        <div className="pr-4 relative">
-          <p className="text-sm font-bold text-white leading-tight mb-0.5">IMEI Matched</p>
-          <p className="text-[11px] text-[#9ca3af] leading-none">Official Records</p>
-          <div className="absolute top-1 -right-1 w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-        </div>
-      </motion.div>
+      {/* 
+        The 3D phone is placed in App.tsx directly over this column. 
+        Here we add the strict grid coordinate tags. 
+      */}
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        className="absolute top-1/2 -translate-y-1/2 right-0 lg:right-4 flex flex-col items-center justify-center pointer-events-none z-20"
-      >
-        <div className="w-28 h-28 rounded-full bg-[#0a0a0a]/80 backdrop-blur-md border-t-[3px] border-r-[3px] border-[#dc2626] border-l-[1px] border-b-[1px] border-l-[#27272a] border-b-[#27272a] shadow-[0_0_30px_rgba(220,38,38,0.2)] flex flex-col items-center justify-center relative rotate-45">
-          <div className="flex flex-col items-center justify-center -rotate-45">
-            <span className="text-4xl font-bold text-white tracking-tighter leading-none mb-1">86</span>
-            <span className="text-[8px] text-[#9ca3af] uppercase tracking-[0.1em] mb-1 font-bold">Trust Score</span>
-            <span className="text-xs text-[#10b981] font-bold">Good</span>
-          </div>
-          
-          {/* Glowing dot on the rim */}
-          <div className="absolute top-[10%] right-[10%] w-2 h-2 rounded-full bg-white shadow-[0_0_10px_white,0_0_20px_white]" />
-        </div>
-      </motion.div>
+      {/* Grid Coordinate Tag 1 */}
+      <div className="absolute top-[20%] right-0 border-t border-b border-l border-dashed border-white/10 bg-black py-2 px-4 backdrop-blur-sm">
+         <p className="text-[10px] font-mono tracking-widest uppercase text-emerald-400">
+           [ IMEI_MATCHED ]
+         </p>
+      </div>
+
+      {/* Grid Coordinate Tag 2 */}
+      <div className="absolute top-[60%] left-[-1px] -translate-x-full border-t border-b border-dashed border-white/10 bg-black py-2 px-4 backdrop-blur-sm">
+         <p className="text-[10px] font-mono tracking-widest uppercase text-red-400 flex gap-4">
+           <span>TRUST_SCORE</span>
+           <span className="text-white font-[900]">86</span>
+         </p>
+      </div>
+      
     </motion.div>
   );
 }
